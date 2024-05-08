@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "bcaf6811-4f6a-44da-afa3-076797d413ca",
+		"name": "Innocv",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16577903"
+	},
+	"item": [
+		{
+			"name": "Ejercicio 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('id', 1047);",
+							"pm.environment.set('username', 'maricarmen_perez');",
+							"pm.environment.set('firstName', '');",
+							"pm.environment.set('lastName', '');",
+							"pm.environment.set('email', '');",
+							"pm.environment.set('password', '');",
+							"pm.environment.set('phone', '');",
+							"pm.environment.set('userStatus', 0);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": {{id}},\n    \"username\": \"{{username}}\",\n    \"firstName\": \"{{firstName}}\",\n    \"lastName\": \"{{lastName}}\",\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"phone\": \"{{phone}}\",\n    \"userStatus\": {{userStatus}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ejercicio 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ejercicio 3",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('petStatus', 'available');",
+							"// pm.environment.set('petStatus', 'pending');",
+							"// pm.environment.set('petStatus', 'sold');"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var response = JSON.parse(pm.response.text());",
+							"",
+							"pm.environment.set('availablePet', response[0]);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status={{petStatus}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "{{petStatus}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ejercicio 4",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('password', '654321');",
+							"pm.environment.set('phone', '600000000');",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"{{password}}\",\n    \"phone\": \"{{phone}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ejercicio 5",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const user = JSON.parse(pm.response.text());",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"pm.test(\"Phone is the expected\", function () {",
+							"    const phoneNumber = pm.environment.get('phone');",
+							"    pm.expect(user.phone).to.equal(phoneNumber);",
+							"});",
+							"",
+							"pm.test(\"Password is the expected\", function () {",
+							"    const password = pm.environment.get('password');",
+							"    pm.expect(user.password).to.equal(password);",
+							"});",
+							"",
+							"pm.test(\"Username is the expected\", function () {",
+							"    const username = pm.environment.get('username');",
+							"    pm.expect(user.username).to.equal(username);",
+							"});",
+							"",
+							"pm.test(\"Id is the expected\", function () {",
+							"    const id = pm.environment.get('id');",
+							"    pm.expect(user.id).to.equal(id);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/{{username}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
